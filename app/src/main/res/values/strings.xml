@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
     <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
     <string name="true_button_text">True</string>
     <string name="false_button_text">False</string>
     <string name="correct_toast">Correct!</string>
