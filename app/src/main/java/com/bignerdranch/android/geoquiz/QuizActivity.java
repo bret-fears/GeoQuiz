@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class QuizActivity extends AppCompatActivity {
 
     public static final String TAG = "QuizActivity";
+    public static final String KEY_INDEX = "index";
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -34,6 +35,22 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_quiz);
+
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, /*defaultValue=*/0);
+        }
+
+        // Log a message at "debug" log level
+        Log.d(TAG, "Current question index: " + mCurrentIndex);
+
+        Question question;
+
+        try {
+            question = mQuestionBank[mCurrentIndex];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Log a message at "error" log level, along with an exception stack trace
+            Log.e(TAG, "Index was out of bounds", e);
+        }
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
@@ -80,6 +97,13 @@ public class QuizActivity extends AppCompatActivity {
         });
 
         updateQuestion();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState");
+        outState.putInt(KEY_INDEX, mCurrentIndex);
     }
 
     @Override
